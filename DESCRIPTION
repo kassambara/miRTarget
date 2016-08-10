@@ -1,0 +1,31 @@
+Package: miRTarget
+Type: Package
+Title: Find miRNA targets
+Version: 1.0.0
+Date: 2015-12-16
+Authors@R: c(
+    person("Alboukadel", "Kassambara", role = c("aut", "cre"), email = "alboukadel.kassambara@gmail.com"))
+Description: Find miRNA targets.
+License: GPL-2
+LazyData: TRUE
+Depends:
+    R (>= 3.2.3)
+Imports:
+    ggplot2,
+    methods,
+    readxl,
+    reshape2
+Suggests:
+    knitr
+VignetteBuilder: knitr
+URL: http://www.sthda.com
+BugReports: https://github.com/kassambara/miRTarget/issues
+RoxygenNote: 5.0.1
+Collate:
+    'all_classes.R'
+    'combine_mir_mrna_exprs.R'
+    'combine_mir_pvt.R'
+    'combine_mir_vt.R'
+    'correlation.R'
+    'get_mirecords.R'
+    'get_mirtarbase.R'

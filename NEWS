@@ -1,0 +1,25 @@
+miRTarget 1.0.1
+----------------------------------------------------
+
+NEW FEATURES
+
+* get_mirecords_pt(): Get predicted targets for miRNAs using miRecords database. Internet connexion is required.
+
+* get_mirecords_vt(): Download validated targets for each miRNA. Internet connexion is required.
+
+* get_mirtarbase_vt(): Download validated targets for each miRNA using miRTarBase. Internet connexion is required.
+
+* combine_mir_vt(): Combine miRNA validated targets from differents sources (miRecords and miRTarbase)
+
+* combine_mir_pvt(): Combine miRNA predicted and validated targets
+
+* combine_mir_mrna_exprs(): Combine miRNA and mRNA expression data. The output dataset will be used for statistical approach-based miRNA target predictions.
+
+* corr_mir_mrna(): Compute correlation between miRNA and mRNA expression
+
+* viz_mrna_per_mir(): Visualize the number of correlated mRNAs per miRNA
+
+# To do
+
+mir family: miFam.dat 	Family classification of miRNA hairpin sequences, http://www.mirbase.org/ftp.shtml
+

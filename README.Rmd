@@ -1,0 +1,117 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+   
+   
+# miRTarget : Integrative analysis of miRNA and mRNA
+       
+     
+miRTarget helps to find miRNA predicted and validated targets.  Two databases are used [miRecords](http://c1.accurascience.com/miRecords/) and [miRTarBase](http://mirtarbase.mbc.nctu.edu.tw)
+     
+     
+     
+## Installation and loading
+    
+
+   
+-  Install the latest version from [GitHub](https://github.com/kassambara/miRTarget) as follow: 
+    
+   
+```{r, eval = FALSE}
+# Install
+if(!require(devtools)) install.packages("devtools")
+devtools::install_github("kassambara/miRTarget")
+```
+     
+     
+- Loading
+   
+```{r}
+library(miRTarget)
+```
+
+    
+    
+## Examples of miRNAs
+     
+```{r}
+miRNAs <- c("hsa-miR-28-5p", "hsa-miR-768-5p")
+```
+    
+    
+## Find miRNA targets
+
+    
+     
+### Get predicted miRNA targets
+   
+[miRecords.v4](c1.accurascience.com/miRecords/) database is used. For each miRNA, we want to identify the predicted target genes by at least 5/11 databases.
+   
+The 11 databases are : "diana", "microinspector",	"miranda",	"mirtarget2", "mitarget", "nbmirtar",	"pictar", "pita",	"rna22", "rnahybrid", "targetscan".  
+   
+    
+Internet connexion is required. 
+     
+     
+```{r}
+p_targets <- get_mirecords_pt(miRNAs, n = 5, species = "Homo sapiens",
+                                      result_file = "mirna_mirecords_predicted_targets.txt")
+head(p_targets, 10)
+```
+    
+    
+### Get miRNA validated targets
+   
+   
+miRecords and miRtarbase are used. Internet connexion is required.
+    
+    
+1. miRecords
+    
+    
+```{r}
+mirecords_vt <- get_mirecords_vt(miRNAs, 
+                                 species = "Homo sapiens", version = 4)
+head(mirecords_vt, 10)
+```
+    
+    
+2. miRtarbase
+     
+     
+```{r}
+mirtarbase_vt <- get_mirtarbase_vt(miRNAs)
+head(mirtarbase_vt, 10)
+```
+    
+    
+3. Combine validated targets
+    
+    
+```{r}
+v_targets <- combine_mir_vt(mirecords_vt, mirtarbase_vt)
+# head(v_targets) 
+```
+    
+    
+### Merge predicted and validated targets   
+     
+     
+```{r}
+targets <- combine_mir_pvt(p_targets, v_targets)
+head(targets)
+```
+    
+     
