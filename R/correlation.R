@@ -202,23 +202,6 @@ viz_neg_cor_fraction <- function(object, output = c("plot", "table")){
   c(round(res$estimate,3), res$p.value)
 }
 
-# x expression matrix in log2 scale
-# y variable used for design
-# return the correlation between y (miRNA) and element in x
-.limma_cor <- function(x, y){
-  if (!requireNamespace("limma", quietly = TRUE)) {
-    stop("limma R/Bioconductor package needed for this function to work. Please install it.")
-  }
-
-  design <- model.matrix(~y)
-  fit <- limma::lmFit(x, design)
-  fit2 <- limma::eBayes(fit)
-  res <- limma::topTable(fit2, number = nrow(x))
-  res <- res[, c("logFC", "P.Value", "adj.P.Val")]
-  colnames(res) <- c("cor.coeff", "p.value", "fdr")
-  as.data.frame(res)
-}
-
 # Check if miRNA names provided by users is valid
 .validate_mir_names <- function(mir_targets, names){
   dd <- setdiff(names, mir_targets$mirna_name)
