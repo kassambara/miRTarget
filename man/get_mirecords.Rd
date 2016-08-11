@@ -60,7 +60,7 @@ miRecords (\url{http://c1.accurascience.com/miRecords/}) is a
   validated targets for each miRNA. Internet connexion is required. }
 }
 \examples{
-\donttest{
+\dontrun{
 # Predicted targets
  ptget <- get_mirecords_pt(c("hsa-miR-16", "hsa-miR-155"))
  head(ptget)

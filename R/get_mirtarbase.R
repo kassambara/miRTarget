@@ -30,7 +30,7 @@ NULL
 #' @references A. Kassambara. Statistical Tools for High-throughput Data
 #'   Analysis. http://www.sthda.com
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # 3. Get validated targets for miRNA of interest
 #'  vtget <- get_mirtarbase_vt(c("hsa-miR-16", "hsa-miR-155"))
 #'

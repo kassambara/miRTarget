@@ -20,7 +20,7 @@ A helper function for combining miRNA targets from differents
  sources. Duplicated miRNA-target interactions are automatically removed.
 }
 \examples{
-\donttest{
+\dontrun{
 # Example of miRNAs
 miRNAs <- c("hsa-miR-16", "hsa-miR-155")
 

@@ -39,7 +39,7 @@ miRTarBase (\url{http://mirtarbase.mbc.nctu.edu.tw/index.php})
   connexion is required. }
 }
 \examples{
-\donttest{
+\dontrun{
 # 3. Get validated targets for miRNA of interest
  vtget <- get_mirtarbase_vt(c("hsa-miR-16", "hsa-miR-155"))
 

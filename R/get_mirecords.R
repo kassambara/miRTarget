@@ -41,7 +41,7 @@ NULL
 #' @references A. Kassambara. Statistical Tools for High-throughput Data
 #'   Analysis. http://www.sthda.com
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Predicted targets
 #'  ptget <- get_mirecords_pt(c("hsa-miR-16", "hsa-miR-155"))
 #'  head(ptget)

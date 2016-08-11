@@ -15,7 +15,7 @@ NULL
 #'@references A. Kassambara. Statistical Tools for High-throughput Data
 #'  Analysis. http://www.sthda.com
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Example of miRNAs
 #' miRNAs <- c("hsa-miR-16", "hsa-miR-155")
 #'
