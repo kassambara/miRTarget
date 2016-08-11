@@ -18,7 +18,7 @@ Imports:
 Suggests:
     knitr
 VignetteBuilder: knitr
-URL: http://www.sthda.com
+URL: https://github.com/kassambara/miRTarget/
 BugReports: https://github.com/kassambara/miRTarget/issues
 RoxygenNote: 5.0.1
 Collate:
