@@ -27,5 +27,6 @@ Collate:
     'combine_mir_pvt.R'
     'combine_mir_vt.R'
     'correlation.R'
+    'gene_exprs.R'
     'get_mirecords.R'
     'get_mirtarbase.R'
