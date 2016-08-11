@@ -89,7 +89,7 @@ get_mirecords_pt <- function(miRNAs, n = 5, species = "Homo sapiens",
     if(!keep_db_names) res <- res[, 1:2, drop = FALSE]
 
     res$status <- rep("predicted", nrow(res))
-    res <- subset(res, mirna_name %in% miRNAs)
+    res <- subset(res, res$mirna_name %in% miRNAs)
     return(MirTarget(res))
   }
 

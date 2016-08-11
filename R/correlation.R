@@ -43,7 +43,6 @@ NULL
 #' @author Alboukadel Kassambara \email{alboukadel.kassambara@@gmail.com}
 #' @references A. Kassambara. Statistical Tools for High-throughput Data
 #'   Analysis. http://www.sthda.com
-#'
 #' @export
 corr_mir_mrna <- function(mir_targets, mir_mrna_exprs, mirs_of_interest = "all",
                           method = "pearson", stand = TRUE,
@@ -135,11 +134,11 @@ viz_mrna_per_mir <- function(object, coeff = 0.5, lab.size = 8, lab.angle = 45,
 
   if(!inherits(object, "CorMirTarget"))
     stop("An object of class CorMirTarget is required.")
-  object <- subset(object, abs(cor.coeff) >= abs(coeff))
+  object <- subset(object, abs(object$cor.coeff) >= abs(coeff))
 
   # Negative and positive correlation
-  neg.cor <- subset(object, cor.coeff < 0 )
-  pos.cor <- subset(object, cor.coeff >  0 )
+  neg.cor <- subset(object, object$cor.coeff < 0 )
+  pos.cor <- subset(object, object$cor.coeff >  0 )
 
   # Count the number of positive and negative correlation per miRNA
   neg.cor <- summary(as.factor(neg.cor$mirna_name))
@@ -171,7 +170,8 @@ viz_mrna_per_mir <- function(object, coeff = 0.5, lab.size = 8, lab.angle = 45,
 }
 
 
-#' describeIn correlation Fraction of negative correlation events
+#' @describeIn correlation Fraction of negative correlation events
+#' @param output allowed values are "plot" or "table"
 #' @export
 viz_neg_cor_fraction <- function(object, output = c("plot", "table")){
   coeff <- seq(from = 0, to = 0.95, by = 0.05)
