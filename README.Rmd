@@ -68,7 +68,8 @@ Internet connexion is required.
      
 ```{r}
 p_targets <- get_mirecords_pt(miRNAs, n = 5, species = "Homo sapiens",
-                                      result_file = "mirna_mirecords_predicted_targets.txt")
+                                      result_file = "mirna_mirecords_predicted_targets.txt",
+                              show_progress = FALSE)
 head(p_targets, 10)
 ```
     
@@ -115,4 +116,110 @@ targets <- combine_mir_pvt(p_targets, v_targets)
 head(targets)
 ```
     
+    
+## Correlation between miRNA expression and target gene expressions
+    
+    
+### miRNA expression value
+
+```{r}
+# Create some data with 4 samples (S) and two miRNAs
+mirna_exprs <- data.frame(S1 = c(99, 8690), S2 = c(31, 612),
+                          S3 = c(33, 1747), S4 = c(29, 2540))
+rownames(mirna_exprs) <- c("hsa-miR-28-5p", "hsa-miR-768-5p")
+
+print(mirna_exprs)
+```
+    
+    
+### Expression value of miRNA potential target gene
+     
+     
+```{r}
+data("gene_exprs")
+head(gene_exprs, 10)
+```
+     
+     
+
+### Keep only targets, which gene expressions are available
+   
+   
+```{r}
+# Keep only target with gene expression data
+targets <- subset(targets, targets$target.gene_name %in% rownames(gene_exprs) )
+# Order data by miRNA name
+targets <- targets[order(targets$mirna_name),  ]
+# Change rownames
+rownames(targets) <- paste0(targets$mirna_name, "::", targets$target.gene_name)
+head(targets)
+```
+
+    
+### Combine miRNA and mRNA expression data
+      
+      
+The name and the number of samples in the two data set should be identical.
+      
+```{r, echo = FALSE}
+mir_mrna_exprs <- combine_mir_mrna_exprs(mirna_exprs, gene_exprs)
+```
+      
+      
+### Correlation between miRNAs and the corresponding target genes
+      
+      
+> If a gene is targeted by a miRNA we expect that the expression profile of the gene and the miRNA are anti-correlated.
+     
+     
+```{r}
+res.cor <- corr_mir_mrna( mir_targets = MirTarget(targets),
+                          mir_mrna_exprs = mir_mrna_exprs, 
+                          show_progress = FALSE, stand = TRUE)
+```
+     
+     
+     
+- Number of mRNAs per miRNAs with an absolute correlation of 0.6
+   
+   
+```{r, fig.width = 3, fig.height=5}
+viz_mrna_per_mir(res.cor, coeff = 0.6)
+```
+    
+    
+- If you want to visualize the fraction of negative correlation use this
+    
+```{r}
+viz_neg_cor_fraction(res.cor)
+```
+     
+     
+
+    
+### Keep only negative correlation
+    
+    
+r < -0.6
+    
+     
+```{r}
+# Negative correlation
+neg.cor <- subset(res.cor, abs(cor.coeff) > 0.6 & cor.coeff < 0)
+
+nmir <- length(unique(neg.cor$mirna_name))
+ngn <- length(unique(neg.cor$target.gene_name))
+valid <- subset(neg.cor, status %in% c("PV", "V"))
+```
+      
+      
+    
+- Number of negative interactions: `r nrow(neg.cor)`
+- Number of unique gene : `r ngn`
+- Number of unique miRNA : `r nmir`
+- Validated target-interaction: `r nrow(valid)`
+    - Unique genes : `r length(unique(valid$target.gene_name))`
+    - Unique miRNAs : `r length(unique(valid$mirna_name))`
+   
+   
      

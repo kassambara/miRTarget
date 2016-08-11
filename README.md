@@ -41,17 +41,8 @@ Internet connexion is required.
 
 ``` r
 p_targets <- get_mirecords_pt(miRNAs, n = 5, species = "Homo sapiens",
-                                      result_file = "mirna_mirecords_predicted_targets.txt")
-#> 
-#> Downloading predicted target....
-#> 
-  |                                                                       
-  |                                                                 |   0%
-  |                                                                       
-  |================================                                 |  50%
-  |                                                                       
-  |=================================================================| 100%
-#> **Finished**
+                                      result_file = "mirna_mirecords_predicted_targets.txt",
+                              show_progress = FALSE)
 #> Results have been saved in the following file: mirna_mirecords_predicted_targets.txt
 head(p_targets, 10)
 #>       mirna_name target.gene_name    status
@@ -122,3 +113,107 @@ head(targets)
 #> 5  hsa-miR-28-5p           ZNF106      V
 #> 6  hsa-miR-28-5p          NKIRAS2      V
 ```
+
+Correlation between miRNA expression and target gene expressions
+----------------------------------------------------------------
+
+### miRNA expression value
+
+``` r
+# Create some data with 4 samples (S) and two miRNAs
+mirna_exprs <- data.frame(S1 = c(99, 8690), S2 = c(31, 612),
+                          S3 = c(33, 1747), S4 = c(29, 2540))
+rownames(mirna_exprs) <- c("hsa-miR-28-5p", "hsa-miR-768-5p")
+
+print(mirna_exprs)
+#>                  S1  S2   S3   S4
+#> hsa-miR-28-5p    99  31   33   29
+#> hsa-miR-768-5p 8690 612 1747 2540
+```
+
+### Expression value of miRNA potential target gene
+
+``` r
+data("gene_exprs")
+head(gene_exprs, 10)
+#>            S1   S2   S3   S4
+#> AFF3     2254   14   15   15
+#> IL7       250  104   22   14
+#> SIGLEC10 1258  221  106  110
+#> TUBB2A   1678  484   71   48
+#> UNG       130 1883  212  125
+#> TPM4      424 3835  744  199
+#> E2F6       66  389  456  622
+#> HSPA6    1021   91   75  109
+#> UMPS      165 1792  754  688
+#> E2F3      361 2455 1388 1361
+```
+
+### Keep only targets, which gene expressions are available
+
+``` r
+# Keep only target with gene expression data
+targets <- subset(targets, targets$target.gene_name %in% rownames(gene_exprs) )
+# Order data by miRNA name
+targets <- targets[order(targets$mirna_name),  ]
+# Change rownames
+rownames(targets) <- paste0(targets$mirna_name, "::", targets$target.gene_name)
+head(targets)
+#>                            mirna_name target.gene_name status
+#> hsa-miR-28-5p::CENPV    hsa-miR-28-5p            CENPV      V
+#> hsa-miR-28-5p::PRDM2    hsa-miR-28-5p            PRDM2      V
+#> hsa-miR-28-5p::ARHGAP42 hsa-miR-28-5p         ARHGAP42      V
+#> hsa-miR-28-5p::PRSS16   hsa-miR-28-5p           PRSS16      V
+#> hsa-miR-28-5p::TUBB2A   hsa-miR-28-5p           TUBB2A      V
+#> hsa-miR-28-5p::PCYOX1   hsa-miR-28-5p           PCYOX1      V
+```
+
+### Combine miRNA and mRNA expression data
+
+The name and the number of samples in the two data set should be identical.
+
+### Correlation between miRNAs and the corresponding target genes
+
+> If a gene is targeted by a miRNA we expect that the expression profile of the gene and the miRNA are anti-correlated.
+
+``` r
+res.cor <- corr_mir_mrna( mir_targets = MirTarget(targets),
+                          mir_mrna_exprs = mir_mrna_exprs, 
+                          show_progress = FALSE, stand = TRUE)
+```
+
+-   Number of mRNAs per miRNAs with an absolute correlation of 0.6
+
+``` r
+viz_mrna_per_mir(res.cor, coeff = 0.6)
+```
+
+![](README-unnamed-chunk-15-1.png)
+
+-   If you want to visualize the fraction of negative correlation use this
+
+``` r
+viz_neg_cor_fraction(res.cor)
+```
+
+![](README-unnamed-chunk-16-1.png)
+
+### Keep only negative correlation
+
+r \< -0.6
+
+``` r
+# Negative correlation
+neg.cor <- subset(res.cor, abs(cor.coeff) > 0.6 & cor.coeff < 0)
+
+nmir <- length(unique(neg.cor$mirna_name))
+ngn <- length(unique(neg.cor$target.gene_name))
+valid <- subset(neg.cor, status %in% c("PV", "V"))
+```
+
+-   Number of negative interactions: 33
+-   Number of unique gene : 33
+-   Number of unique miRNA : 2
+-   Validated target-interaction: 12
+    -   Unique genes : 12
+    -   Unique miRNAs : 1
