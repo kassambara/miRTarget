@@ -12,7 +12,6 @@ Depends:
     R (>= 3.2.3)
 Imports:
     ggplot2,
-    methods,
     readxl,
     reshape2
 Suggests:
