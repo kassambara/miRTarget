@@ -33,9 +33,9 @@ MirMrnaExprs <- function(data.frame) {
 #' @export
 MirTarget <- function(data.frame) {
 
-   min_cnames <- c("mirna_name", "target.gene_name",  "status")
+   mir_cnames <- c("mirna_name", "target.gene_name",  "status")
 
-   if(!(all(min_cnames%in%names(data.frame))))
+   if(!(all(mir_cnames%in%names(data.frame))))
      stop("Target data must contains at least these three columns: ",
           paste(mir_cnames, collapse = ", "))
 
