@@ -117,7 +117,7 @@ head(targets)
 Correlation between miRNA expression and target gene expressions
 ----------------------------------------------------------------
 
-### miRNA expression value
+### Expression values of miRNAs
 
 ``` r
 # Create some data with 4 samples (S) and two miRNAs
@@ -131,7 +131,7 @@ print(mirna_exprs)
 #> hsa-miR-768-5p 8690 612 1747 2540
 ```
 
-### Expression value of miRNA potential target gene
+### Expression value of miRNA potential target genes
 
 ``` r
 data("gene_exprs")
@@ -172,6 +172,10 @@ head(targets)
 
 The name and the number of samples in the two data set should be identical.
 
+``` r
+mir_mrna_exprs <- combine_mir_mrna_exprs(mirna_exprs, gene_exprs)
+```
+
 ### Correlation between miRNAs and the corresponding target genes
 
 > If a gene is targeted by a miRNA we expect that the expression profile of the gene and the miRNA are anti-correlated.
@@ -205,6 +209,18 @@ r \< -0.6
 ``` r
 # Negative correlation
 neg.cor <- subset(res.cor, abs(cor.coeff) > 0.6 & cor.coeff < 0)
+head(neg.cor, 10)
+#>       mirna_name target.gene_name cor.coeff    p.value       fdr status
+#> 1  hsa-miR-28-5p             IER3    -0.951 0.04901988 0.1416130      V
+#> 2  hsa-miR-28-5p           ZNF569    -0.939 0.06081484 0.1506698      P
+#> 3  hsa-miR-28-5p         TMEM167A    -0.935 0.06511116 0.1538991      V
+#> 4  hsa-miR-28-5p             E2F6    -0.920 0.07967078 0.1726200      V
+#> 5  hsa-miR-28-5p             SNX1    -0.866 0.13408097 0.2582300      V
+#> 6  hsa-miR-28-5p            YIPF6    -0.860 0.13971692 0.2594743      V
+#> 7  hsa-miR-28-5p           TEX261    -0.834 0.16580415 0.2973040      V
+#> 8  hsa-miR-28-5p          CSNK1G1    -0.827 0.17309904 0.3000383      P
+#> 9  hsa-miR-28-5p           PCYOX1    -0.806 0.19422393 0.3257950      V
+#> 10 hsa-miR-28-5p           HNRNPC    -0.759 0.24051212 0.3908322      V
 
 nmir <- length(unique(neg.cor$mirna_name))
 ngn <- length(unique(neg.cor$target.gene_name))

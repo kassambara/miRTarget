@@ -120,7 +120,7 @@ head(targets)
 ## Correlation between miRNA expression and target gene expressions
     
     
-### miRNA expression value
+### Expression values of miRNAs
 
 ```{r}
 # Create some data with 4 samples (S) and two miRNAs
@@ -132,7 +132,7 @@ print(mirna_exprs)
 ```
     
     
-### Expression value of miRNA potential target gene
+### Expression value of miRNA potential target genes
      
      
 ```{r}
@@ -161,7 +161,7 @@ head(targets)
       
 The name and the number of samples in the two data set should be identical.
       
-```{r, echo = FALSE}
+```{r}
 mir_mrna_exprs <- combine_mir_mrna_exprs(mirna_exprs, gene_exprs)
 ```
       
@@ -183,7 +183,7 @@ res.cor <- corr_mir_mrna( mir_targets = MirTarget(targets),
 - Number of mRNAs per miRNAs with an absolute correlation of 0.6
    
    
-```{r, fig.width = 3, fig.height=5}
+```{r, fig.width = 4, fig.height=4}
 viz_mrna_per_mir(res.cor, coeff = 0.6)
 ```
     
@@ -206,6 +206,7 @@ r < -0.6
 ```{r}
 # Negative correlation
 neg.cor <- subset(res.cor, abs(cor.coeff) > 0.6 & cor.coeff < 0)
+head(neg.cor, 10)
 
 nmir <- length(unique(neg.cor$mirna_name))
 ngn <- length(unique(neg.cor$target.gene_name))
