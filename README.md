@@ -105,13 +105,13 @@ v_targets <- combine_mir_vt(mirecords_vt, mirtarbase_vt)
 ``` r
 targets <- combine_mir_pvt(p_targets, v_targets)
 head(targets)
-#>       mirna_name target.gene_name status
-#> 1  hsa-miR-28-5p          gag-pol      V
-#> 2 hsa-miR-768-5p             <NA>      V
-#> 3  hsa-miR-28-5p        LINC00346      V
-#> 4  hsa-miR-28-5p           SEMA4C      V
-#> 5  hsa-miR-28-5p           ZNF106      V
-#> 6  hsa-miR-28-5p          NKIRAS2      V
+#>      mirna_name target.gene_name status
+#> 1 hsa-miR-28-5p          gag-pol      V
+#> 2 hsa-miR-28-5p        LINC00346      V
+#> 3 hsa-miR-28-5p           SEMA4C      V
+#> 4 hsa-miR-28-5p           ZNF106      V
+#> 5 hsa-miR-28-5p          NKIRAS2      V
+#> 6 hsa-miR-28-5p           IMPDH1      V
 ```
 
 Correlation between miRNA expression and target gene expressions
