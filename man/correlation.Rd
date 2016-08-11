@@ -4,6 +4,7 @@
 \alias{corr_mir_mrna}
 \alias{correlation}
 \alias{viz_mrna_per_mir}
+\alias{viz_neg_cor_fraction}
 \title{Correlation between miRNA and mRNA expression}
 \usage{
 corr_mir_mrna(mir_targets, mir_mrna_exprs, mirs_of_interest = "all",
@@ -12,6 +13,8 @@ corr_mir_mrna(mir_targets, mir_mrna_exprs, mirs_of_interest = "all",
 
 viz_mrna_per_mir(object, coeff = 0.5, lab.size = 8, lab.angle = 45,
   output = c("plot", "table"))
+
+viz_neg_cor_fraction(object, output = c("plot", "table"))
 }
 \arguments{
 \item{mir_targets}{an object of class MirTarget containing the miRNA-mRNA
@@ -46,6 +49,8 @@ value is "cor.coeff".}
 
 \item{lab.angle}{rotation angle of x axis labels
 correlation >= coeff with one or more mRNAs are kept.}
+
+\item{output}{allowed values are "plot" or "table"}
 }
 \value{
 Returns an object of class CorMirTargets which is a data.frame
@@ -70,6 +75,8 @@ Compute the correlation between the expression of each miRNA and
 \item \code{corr_mir_mrna}: Compute correlation between miRNA and mRNA expression
 
 \item \code{viz_mrna_per_mir}: Visualize the number of correlated mRNAs per miRNA
+
+\item \code{viz_neg_cor_fraction}: Fraction of negative correlation events
 }}
 \author{
 Alboukadel Kassambara \email{alboukadel.kassambara@gmail.com}
